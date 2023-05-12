@@ -2,17 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Youkoso from './components/Youkoso';
-import { Name}  from './components/Name';
-import Message  from './components/Message';
-import ContainerSample  from './components/ContainerSample';
-import ContainerSampleKata  from './components/ContainerSampleKata';
-import ContextSample  from './components/ContextSample';
-import Counter  from './components/Counter';
-import CounterReducer  from './components/CounterReducer';
-import { Parent }  from './components/Parent';
-import { ParentKai }  from './components/ParentKai';
-import { UseMemoSample }  from './components/UseMemoSample';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -20,7 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <UseMemoSample />
+    <App />
   </React.StrictMode>
 );
 
