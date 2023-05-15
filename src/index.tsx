@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Youkoso from './components/Youkoso';
+import IroiroTamesu from './componetnsVer2/IroiroTamesu';
 import Name from './components/Name';
-import Message from './components/Message';
+// import Message from './components/Message';
 import ContainerSample from './components/ContainerSample';
 import ContextSample from './components/ContextSample';
 import Counter from './components/Counter';
@@ -20,7 +21,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Clock />
+    <IroiroTamesu />
   </React.StrictMode>
 );
 
