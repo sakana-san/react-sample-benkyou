@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import ConTextSample from './components/ConTextSample';
+import LikeBtn from './components/LikeBtn';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -10,7 +11,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ConTextSample />
+    <LikeBtn />
   </React.StrictMode>
 );
 
