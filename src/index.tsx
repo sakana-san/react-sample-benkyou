@@ -23,7 +23,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <IroiroTamesu  />
-    <FookDayo display={false} />
+    <FookDayo />
   </React.StrictMode>
 );
 
