@@ -1,5 +1,5 @@
 import { type } from 'os'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 
 
 //  useEffect クリーンアップなし--------------------------------------
@@ -96,53 +96,39 @@ import React, { useState, useEffect, useCallback } from 'react'
 
 
 
-//  useEffect クリーンアップあり　--------------------------------------
+//  useMemo　--------------------------------------
 
-type CP = {
-  count: number
-  text: string
+const Square = (n: number) => {
+  const testData = [...Array(1000).keys()]
+  testData.forEach((n) => {
+    console.log() 
+  })
+  return  n * n
 }
-type BT = {
-  text: string
-  onClick: () => void
-}
-const ConstResult = React.memo((props: CP) => {
-  const {count, text } = props
-  console.log(`${text}がクリックされました`)
-  return (
-    <div>
-      <p>{text}: {count}</p>
-    </div>
-  )
-})
-
-const Btn = React.memo((props: BT) => {
-  const {text, onClick} = props
-  return (
-    <div>
-      <button onClick={onClick}>{text}</button>
-    </div>
-  )
-})
-
-const FookDayo = (props: CP) => {
-  const {count } = props
-  const [getA, setA] = useState(count)
-  const [getB, setB] = useState(count)
- const onClick1 = useCallback(() => {
-  setA((cp) => cp + 1)
- }, [])
-
- const onClick2 = useCallback(() => {
-  setB((cp) => cp + 1)
- }, [])
-
+const FookDayo = () => {
+  const [gcA, scA] = useState(0)
+  const [gcB, scB] = useState(0)
+  const onClickA = () => {
+    scA((cp) => cp + 1)
+  }
+  const onClickB = () => {
+    scB((cp) => cp + 1)
+  }
+  const keisan = useMemo(() => Square(gcB), [gcB])
  return(
   <div>
-    <ConstResult count={getA} text="Aボタン" />
-    <ConstResult count={getB} text="Bボタン" />
-    <Btn onClick={onClick1} text="A" />
-    <Btn onClick={onClick2} text="B" />
+    <p>
+      計算結果A: {gcA}
+      <button onClick={onClickA}>計算: A+1</button>
+    </p>
+    <p>
+      計算結果B: {gcB}
+      <button onClick={onClickB}>計算: B+1</button>
+    </p>
+    <p>
+      正方形の面積
+    </p>
+    { keisan }
   </div>
  )
 }

@@ -13,7 +13,6 @@ import { ParentKai } from './components/ParentKai';
 import {ParentKaiCallback} from './components/ParentKaiCallback'
 import {UseMemoSample} from './components/UseMemoSample'
 import {Clock} from './components/Clock'
-import IroIroTamesu from './componetnsVer2/IroIroTamesu'
 import FookDayo from './componetnsVer2/FookDayo'
 import reportWebVitals from './reportWebVitals';
 
@@ -23,7 +22,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     {/* <Clock /> */}
-    <FookDayo count={0} text="" />
+    <FookDayo />
   </React.StrictMode>
 );
 
