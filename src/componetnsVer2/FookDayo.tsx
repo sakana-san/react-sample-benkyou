@@ -101,7 +101,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 const Square = (n: number) => {
   const testData = [...Array(1000).keys()]
   testData.forEach((n) => {
-    console.log("ループ処理") 
+    console.log() 
   })
   return  n * n
 }
