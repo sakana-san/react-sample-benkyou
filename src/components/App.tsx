@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { type } from "os";
+import { useTodo } from "../hooks/useTodo";
 
 
 type TProps = {
@@ -54,18 +54,7 @@ const TodoItem = (props: TIProps) => {
 
 
 function App() {
-  // localhostはポート3000
-  // モックサーバーはポート3001
-  //　ポートを分けないと画面が真っ白になる
-  const todoDataUrl = "http://localhost:3001/todos";
-  const [todoList, setTodoList] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(todoDataUrl);
-      setTodoList(response.data);
-    };
-    fetchData();
-  }, []);
+  const { todoList }:any = useTodo()
 
   // 方式 --------------------------------------------------
   console.log('Todoリスト', todoList);  
