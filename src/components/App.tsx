@@ -11,6 +11,7 @@ type TitleProps = {
 type TodoListProps = {
   todoList: string[]
   deleteTodoListItem: any
+  toggleTodoListItem: any
 }
 
 type TodoItemProps = {
@@ -19,6 +20,7 @@ type TodoItemProps = {
   item: string
   flag: boolean
   deleteTodoListItem: any
+  toggleTodoListItem: any
 }
 
 type TodoAddProps = {
@@ -37,7 +39,7 @@ const TodoTitle = (props: TitleProps) => {
 }
 
 const TodoList = (props: TodoListProps) => {
-  const {todoList, deleteTodoListItem} = props
+  const {todoList, deleteTodoListItem, toggleTodoListItem} = props
   return (
     <ul>
       {
@@ -48,6 +50,7 @@ const TodoList = (props: TodoListProps) => {
             key={v.id}
             id={v.id}
             deleteTodoListItem={deleteTodoListItem}
+            toggleTodoListItem={toggleTodoListItem}
           />
         ))
       }
@@ -56,14 +59,17 @@ const TodoList = (props: TodoListProps) => {
 }
 
 const TodoItem = (props: TodoItemProps) => {
-  const {item, flag , id, deleteTodoListItem} = props
+  const {item, flag , id, deleteTodoListItem, toggleTodoListItem} = props
   const handleDeleteTodoListItem = () => {
     deleteTodoListItem(id)
+  }
+  const handleToggleTodoListItem = () => {
+    toggleTodoListItem(id, flag)
   }
   return (
     <li>
       {item}
-      <button>{flag ? "未完了リストへ" : "完了リストへ"}</button>
+      <button onClick={handleToggleTodoListItem}>{flag ? "未完了リストへ" : "完了リストへ"}</button>
       <button onClick={handleDeleteTodoListItem}>削除</button>
     </li>
   )
@@ -81,7 +87,7 @@ const TodoAdd = (props: TodoAddProps) => {
 
 
 function App() {
-  const { todoList, addTodoListItem, deleteTodoListItem }:any = useTodo()
+  const { todoList, addTodoListItem, deleteTodoListItem, toggleTodoListItem}:any = useTodo()
   const inputEl = useRef<HTMLTextAreaElement>(null)
 
   // 方式 --------------------------------------------------
@@ -111,11 +117,19 @@ function App() {
       <TodoAdd onClick={handleAddTodoListItem} inputEl={inputEl} />
 
       <TodoTitle title="未完成todoリスト" size="h2"/>
-      <TodoList todoList={inCompList} deleteTodoListItem={deleteTodoListItem} />
+      <TodoList
+        todoList={inCompList}
+        deleteTodoListItem={deleteTodoListItem}
+        toggleTodoListItem={toggleTodoListItem}
+      />
 
 
       <TodoTitle title="完成todoリスト" size="h2"/> 
-      <TodoList todoList={compList} deleteTodoListItem={deleteTodoListItem} />
+      <TodoList
+        todoList={compList}
+        deleteTodoListItem={deleteTodoListItem}
+        toggleTodoListItem={toggleTodoListItem}
+      />
     </>
   );
 }

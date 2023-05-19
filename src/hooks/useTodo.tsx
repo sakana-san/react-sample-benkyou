@@ -32,23 +32,22 @@ export const useTodo = () => {
 
   }
 
-
-
-  // const toggleTodosListItemStatus = (id: number, done: boolean) => {
-  //   const todoItem = todoList.find((item: any) => item.id == id)
-  //   const newTodoItem = { ...todoItem as {}, done: !done} 
-  //   todoData.updateTodoData(id, newTodoItem).then((updatedTodo) => {
-  //     const newTodoList = todoList.map((item: any) =>
-  //       item.id !== updatedTodo.id ? item : updatedTodo
-  //     );
-  //     setTodoList(newTodoList);
-  //   });
+  const toggleTodoListItem = (id: number, done: boolean) => {
+    const todoItem = todoList.find((item: any) => item.id == id)
+    const newTodoItem = { ...todoItem as {}, done: !done} 
+    todoData.updateTodoData(id, newTodoItem).then((updatedTodo) => {
+      const newTodoList = todoList.map((item: any) =>
+        item.id !== updatedTodo.id ? item : updatedTodo
+      );
+      setTodoList(newTodoList);
+    });
+  }
 
   return {
     todoList,
     addTodoListItem,
-    deleteTodoListItem
-    // toggleTodosListItemStatus
+    deleteTodoListItem,
+    toggleTodoListItem
   }
 
   

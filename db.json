@@ -3,7 +3,7 @@
     {
       "id": 1,
       "content": "いろはに",
-      "done": true
+      "done": false
     },
     {
       "content": "テスト投稿",
@@ -18,11 +18,6 @@
     {
       "content": "なんだよ",
       "id": "01H0RWVXCBYQPTGKY27KRQD3M0",
-      "done": false
-    },
-    {
-      "content": "d",
-      "id": "01H0S4KKVGX9GW6TXE6W9G2PQK",
       "done": false
     }
   ]
