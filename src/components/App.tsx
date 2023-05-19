@@ -1,4 +1,7 @@
 import React, {useEffect, useState, useRef} from "react";
+import { Container } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { Textarea, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useTodo } from "../hooks/useTodo";
 
@@ -6,6 +9,7 @@ import { useTodo } from "../hooks/useTodo";
 type TitleProps = {
   title: string
   size: string
+  fontSize: any
 }
 
 type TodoListProps = {
@@ -26,6 +30,8 @@ type TodoItemProps = {
 type TodoAddProps = {
   onClick: () => void
   inputEl: any
+  leftIcon: any
+  placeholder: string
 }
 
 
@@ -76,10 +82,13 @@ const TodoItem = (props: TodoItemProps) => {
 }
 
 const TodoAdd = (props: TodoAddProps) => {
-  const {onClick, inputEl} = props
+  const {onClick, inputEl, placeholder} = props
   return (
     <>
-      <textarea  ref={inputEl} />
+      <textarea
+        placeholder={placeholder}
+        ref={inputEl}
+      />
       <button onClick={onClick}>+ todoを追加</button>
     </>
   )
@@ -113,10 +122,26 @@ function App() {
 
   return (
     <>
-      <TodoTitle title="todo進捗管理" size="h1"/>
-      <TodoAdd onClick={handleAddTodoListItem} inputEl={inputEl} />
+    <Container centerContent p={{base: "4", md: "6"}} maxWidth="3xl">
 
-      <TodoTitle title="未完成todoリスト" size="h2"/>
+      <TodoTitle
+        title="todo進捗管理"
+        size="h1"
+        fontSize={{base: "2xl", md: "3xl"}}
+      />
+      <TodoAdd
+        onClick={handleAddTodoListItem}
+        inputEl={inputEl}
+        leftIcon={<AddIcon />}
+        placeholder="記述してください"
+      />
+
+
+      <TodoTitle
+        title="未完成todoリスト"
+        size="h2"
+        fontSize={{base: "xl", md: "2xl"}}
+      />
       <TodoList
         todoList={inCompList}
         deleteTodoListItem={deleteTodoListItem}
@@ -124,12 +149,17 @@ function App() {
       />
 
 
-      <TodoTitle title="完成todoリスト" size="h2"/> 
+      <TodoTitle
+        title="完成todoリスト"
+        size="h2"
+        fontSize={{base: "xl", md: "2xl"}}
+      /> 
       <TodoList
         todoList={compList}
         deleteTodoListItem={deleteTodoListItem}
         toggleTodoListItem={toggleTodoListItem}
       />
+    </Container>
     </>
   );
 }
