@@ -11,16 +11,16 @@ export const useTodo = () => {
       return setTodoList([...t])
     })
   }, [])
-  // const addTodoListItem = (t: any) => {
-  //   const FreshTodoItem = {
-  //     content: t,
-  //     id: ulid(),
-  //     done: false
-  //   };
-  //   return todoData.addTodoData(FreshTodoItem).then((fItem) => {
-  //     setTodoList([fItem, ...todoList]);
-  //   });
-  // };
+  const addTodoListItem = (t: any) => {
+    const FreshTodoItem = {
+      content: t,
+      id: ulid(),
+      done: false
+    };
+    return todoData.addTodoData(FreshTodoItem).then((fItem) => {
+      setTodoList([fItem, ...todoList]);
+    });
+  };
 
 
 
@@ -35,7 +35,8 @@ export const useTodo = () => {
   //   });
 
   return {
-    todoList
+    todoList,
+    addTodoListItem
     // toggleTodosListItemStatus
   }
 

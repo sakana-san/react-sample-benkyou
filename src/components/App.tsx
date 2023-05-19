@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import axios from "axios";
 import { useTodo } from "../hooks/useTodo";
 
@@ -54,9 +54,21 @@ const TodoItem = (props: TIProps) => {
 
 
 function App() {
-  const { todoList }:any = useTodo()
+  const { todoList, addTodoListItem }:any = useTodo()
+
+  const inputEl = useRef<HTMLTextAreaElement>(null)
 
   // 方式 --------------------------------------------------
+  const handleAddTodoListItem = () => {
+    if (inputEl.current?.value === '') return
+
+    addTodoListItem(inputEl.current?.value)
+    if (inputEl.current?.value) {
+      inputEl.current.value = ''
+    }
+  }
+
+  
   console.log('Todoリスト', todoList);  
   const inCompList = todoList.filter((d: any) => {
     return !d.done;
@@ -71,8 +83,8 @@ function App() {
     <>
       <TodoTitle title="todo進捗管理" size="h1"/>
       <h1></h1>
-      <textarea />
-      <button>+ todoを追加</button>
+      <textarea  ref={inputEl} />
+      <button onClick={handleAddTodoListItem}>+ todoを追加</button>
 
       <TodoTitle title="未完成todoリスト" size="h2"/>
       <TodoList todoList={inCompList} />
