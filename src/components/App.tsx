@@ -82,14 +82,15 @@ const TodoItem = (props: TodoItemProps) => {
 }
 
 const TodoAdd = (props: TodoAddProps) => {
-  const {onClick, inputEl, placeholder} = props
+  const {onClick, inputEl, leftIcon, placeholder} = props
   return (
     <>
       <textarea
         placeholder={placeholder}
         ref={inputEl}
       />
-      <button onClick={onClick}>+ todoを追加</button>
+      {/* @ts-ignore */}
+      <button onClick={onClick} leftIcon={leftIcon}>+ todoを追加</button>
     </>
   )
 }
