@@ -22,6 +22,16 @@ export const useTodo = () => {
     });
   };
 
+  const deleteTodoListItem = (id: number) => {
+    todoData.deleteTodoData(id).then((dItem) => {
+      const deleteTodoItem = todoList.filter((item: any) => {
+        return item.id !== dItem
+      })
+      setTodoList(deleteTodoItem)
+    })
+
+  }
+
 
 
   // const toggleTodosListItemStatus = (id: number, done: boolean) => {
@@ -36,7 +46,8 @@ export const useTodo = () => {
 
   return {
     todoList,
-    addTodoListItem
+    addTodoListItem,
+    deleteTodoListItem
     // toggleTodosListItemStatus
   }
 

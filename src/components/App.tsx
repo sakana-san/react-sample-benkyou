@@ -3,24 +3,32 @@ import axios from "axios";
 import { useTodo } from "../hooks/useTodo";
 
 
-type TProps = {
+type TitleProps = {
   title: string
   size: string
 }
 
-type TLProps = {
+type TodoListProps = {
   todoList: string[]
+  deleteTodoListItem: any
 }
 
-type TIProps = {
+type TodoItemProps = {
+  id: number
   key: number
   item: string
   flag: boolean
+  deleteTodoListItem: any
+}
+
+type TodoAddProps = {
+  onClick: () => void
+  inputEl: any
 }
 
 
 
-const TodoTitle = (props: TProps) => {
+const TodoTitle = (props: TitleProps) => {
   const {title, size} = props
   if (size === 'h1') return <h1>{title}</h1>
   if (size === 'h2') return <h2>{title}</h2>
@@ -28,34 +36,52 @@ const TodoTitle = (props: TProps) => {
   return <p>{title}</p>
 }
 
-const TodoList = (props: TLProps) => {
-  const {todoList} = props
+const TodoList = (props: TodoListProps) => {
+  const {todoList, deleteTodoListItem} = props
   return (
     <ul>
       {
         todoList.map((v: any) => (
-          <TodoItem item={v.content} flag={v.done} key={v.id} />
+          <TodoItem
+            item={v.content}
+            flag={v.done}
+            key={v.id}
+            id={v.id}
+            deleteTodoListItem={deleteTodoListItem}
+          />
         ))
       }
     </ul>
   )
 }
 
-const TodoItem = (props: TIProps) => {
-  const {item, flag} = props
+const TodoItem = (props: TodoItemProps) => {
+  const {item, flag , id, deleteTodoListItem} = props
+  const handleDeleteTodoListItem = () => {
+    deleteTodoListItem(id)
+  }
   return (
     <li>
       {item}
       <button>{flag ? "未完了リストへ" : "完了リストへ"}</button>
-      <button>削除</button>
+      <button onClick={handleDeleteTodoListItem}>削除</button>
     </li>
+  )
+}
+
+const TodoAdd = (props: TodoAddProps) => {
+  const {onClick, inputEl} = props
+  return (
+    <>
+      <textarea  ref={inputEl} />
+      <button onClick={onClick}>+ todoを追加</button>
+    </>
   )
 }
 
 
 function App() {
-  const { todoList, addTodoListItem }:any = useTodo()
-
+  const { todoList, addTodoListItem, deleteTodoListItem }:any = useTodo()
   const inputEl = useRef<HTMLTextAreaElement>(null)
 
   // 方式 --------------------------------------------------
@@ -68,7 +94,7 @@ function App() {
     }
   }
 
-  
+
   console.log('Todoリスト', todoList);  
   const inCompList = todoList.filter((d: any) => {
     return !d.done;
@@ -82,16 +108,14 @@ function App() {
   return (
     <>
       <TodoTitle title="todo進捗管理" size="h1"/>
-      <h1></h1>
-      <textarea  ref={inputEl} />
-      <button onClick={handleAddTodoListItem}>+ todoを追加</button>
+      <TodoAdd onClick={handleAddTodoListItem} inputEl={inputEl} />
 
       <TodoTitle title="未完成todoリスト" size="h2"/>
-      <TodoList todoList={inCompList} />
+      <TodoList todoList={inCompList} deleteTodoListItem={deleteTodoListItem} />
 
 
       <TodoTitle title="完成todoリスト" size="h2"/> 
-      <TodoList todoList={compList} />
+      <TodoList todoList={compList} deleteTodoListItem={deleteTodoListItem} />
     </>
   );
 }
