@@ -1,7 +1,7 @@
-import React, {useEffect, useState, useRef} from "react";
-import { Container } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-import { Textarea, Button } from "@chakra-ui/react";
+import React, {useEffect, useState, useRef, memo} from "react";
+import { Heading, Container } from "@chakra-ui/react";
+import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
+import { List, ListItem, Text, Flex, IconButton, Textarea, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useTodo } from "../hooks/useTodo";
 
@@ -10,6 +10,7 @@ type TitleProps = {
   title: string
   size: string
   fontSize: any
+  mt: any
 }
 
 type TodoListProps = {
@@ -36,18 +37,24 @@ type TodoAddProps = {
 
 
 
-const TodoTitle = (props: TitleProps) => {
-  const {title, size} = props
-  if (size === 'h1') return <h1>{title}</h1>
-  if (size === 'h2') return <h2>{title}</h2>
-
-  return <p>{title}</p>
-}
+const TodoTitle = memo((props: TitleProps) => {
+  const {title, size, fontSize, mt} = props
+  return (
+    <Heading
+      mt={mt}
+      size={size}
+      fontSize={fontSize}
+      w="full"
+    >
+      {title}
+    </Heading>
+  )
+})
 
 const TodoList = (props: TodoListProps) => {
   const {todoList, deleteTodoListItem, toggleTodoListItem} = props
   return (
-    <ul>
+    <List w="full">
       {
         todoList.map((v: any) => (
           <TodoItem
@@ -60,7 +67,7 @@ const TodoList = (props: TodoListProps) => {
           />
         ))
       }
-    </ul>
+    </List>
   )
 }
 
@@ -73,11 +80,34 @@ const TodoItem = (props: TodoItemProps) => {
     toggleTodoListItem(id, flag)
   }
   return (
-    <li>
-      {item}
-      <button onClick={handleToggleTodoListItem}>{flag ? "未完了リストへ" : "完了リストへ"}</button>
-      <button onClick={handleDeleteTodoListItem}>削除</button>
-    </li>
+      <ListItem
+        borderWidth="1px"
+        p="4"
+        mt="4"
+        bg="white"
+        borderRadius="md"
+        borderColor="gray.300"
+      >
+        <li>
+          <Text mb="6">{item}</Text>
+          <Flex alignItems="center" justifyContent="flex-end">
+            <Button
+              onClick={handleToggleTodoListItem}
+              colorScheme={flag ? "pink" : "bule"}
+              variant="outline"
+              size="sm"
+            >
+              {flag ? "未完了リストへ" : "完了リストへ"}
+            </Button>
+            <IconButton
+              icon={<DeleteIcon />}
+              variant="unstyled"
+              aria-label="delete"
+              onClick={handleDeleteTodoListItem}
+            />
+          </Flex>
+        </li>
+      </ListItem>
   )
 }
 
@@ -85,12 +115,16 @@ const TodoAdd = (props: TodoAddProps) => {
   const {onClick, inputEl, leftIcon, placeholder} = props
   return (
     <>
-      <textarea
+      <Textarea
         placeholder={placeholder}
         ref={inputEl}
+        /* @ts-ignore */
+        bgColor="white"
+        mt="8"
+        borderColor="gray.300"
       />
       {/* @ts-ignore */}
-      <button onClick={onClick} leftIcon={leftIcon}>+ todoを追加</button>
+      <Button onClick={onClick} colorScheme="blue" leftIcon={leftIcon} mt="8">+ todoを追加</Button>
     </>
   )
 }
@@ -129,6 +163,7 @@ function App() {
         title="todo進捗管理"
         size="h1"
         fontSize={{base: "2xl", md: "3xl"}}
+        mt="8"
       />
       <TodoAdd
         onClick={handleAddTodoListItem}
@@ -142,6 +177,7 @@ function App() {
         title="未完成todoリスト"
         size="h2"
         fontSize={{base: "xl", md: "2xl"}}
+        mt="8"
       />
       <TodoList
         todoList={inCompList}
@@ -154,6 +190,7 @@ function App() {
         title="完成todoリスト"
         size="h2"
         fontSize={{base: "xl", md: "2xl"}}
+        mt="8"
       /> 
       <TodoList
         todoList={compList}
