@@ -4,6 +4,7 @@ import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import { List, ListItem, Text, Flex, IconButton, Textarea, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useTodo } from "../hooks/useTodo";
+import { Link } from "react-router-dom";
 
 
 type TitleProps = {
@@ -40,14 +41,20 @@ type TodoAddProps = {
 const TodoTitle = memo((props: TitleProps) => {
   const {title, size, fontSize, mt} = props
   return (
-    <Heading
-      mt={mt}
-      size={size}
-      fontSize={fontSize}
-      w="full"
-    >
-      {title}
-    </Heading>
+    <>
+      <Heading
+        mt={mt}
+        size={size}
+        fontSize={fontSize}
+        w="full"
+      >
+        {title}
+      </Heading>
+      <p>
+        <Link to="/Hello">Hello</Link>
+      </p>
+    </>
+
   )
 })
 
