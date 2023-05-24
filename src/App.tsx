@@ -3,7 +3,7 @@ import { Heading, Container } from "@chakra-ui/react";
 import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import { List, ListItem, Text, Flex, IconButton, Textarea, Button } from "@chakra-ui/react";
 import axios from "axios";
-import { useTodo } from "../hooks/useTodo";
+import { useTodo } from "./hooks/useTodo";
 import { Link } from "react-router-dom";
 
 
