@@ -2,7 +2,6 @@ import React, {useEffect, useState, useRef, memo, useCallback} from "react";
 import { Heading, Container } from "@chakra-ui/react";
 import { DeleteIcon, AddIcon, StarIcon } from "@chakra-ui/icons";
 import { List, ListItem, Text, Flex, IconButton, Textarea, Button } from "@chakra-ui/react";
-import axios from "axios";
 import { useTodo } from "./hooks/useTodo";
 import { Link } from "react-router-dom";
 
@@ -110,8 +109,10 @@ const TodoItem = React.memo((props: TodoItemProps) => {
     toggleTodoListItem(id, flag)
   }
   const handleGoodTodoListItem = useCallback(() => {
-    setCount((c) => c + 1)
-    goodTodoListItem(id, flag, count)
+    if (flag) {
+      setCount((c) => c + 1)
+      goodTodoListItem(id, count)
+    }
   }, [count])
   return (
       <ListItem
