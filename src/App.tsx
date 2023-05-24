@@ -1,12 +1,13 @@
-import React, {useEffect, useState, useRef, memo} from "react";
+import React, {useEffect, useState, useRef, memo, useCallback} from "react";
 import { Heading, Container } from "@chakra-ui/react";
-import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
+import { DeleteIcon, AddIcon, StarIcon } from "@chakra-ui/icons";
 import { List, ListItem, Text, Flex, IconButton, Textarea, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useTodo } from "./hooks/useTodo";
 import { Link } from "react-router-dom";
 
 
+// 型 ---------------------------------------------------------------------
 type TitleProps = {
   title: string
   size: string
@@ -18,15 +19,18 @@ type TodoListProps = {
   todoList: string[]
   deleteTodoListItem: any
   toggleTodoListItem: any
+  goodTodoListItem: any
 }
 
 type TodoItemProps = {
   id: number
   key: number
   item: string
-  flag: boolean
+  flag: boolean,
+  good: number,
   deleteTodoListItem: any
   toggleTodoListItem: any
+  goodTodoListItem: any
 }
 
 type TodoAddProps = {
@@ -35,9 +39,12 @@ type TodoAddProps = {
   leftIcon: any
   placeholder: string
 }
+// ---------------------------------------------------------------------
 
 
 
+
+// TodoTitle ---------------------------------------------------------------------
 const TodoTitle = memo((props: TitleProps) => {
   const {title, size, fontSize, mt} = props
   return (
@@ -57,9 +64,14 @@ const TodoTitle = memo((props: TitleProps) => {
 
   )
 })
+// ---------------------------------------------------------------------
 
+
+
+
+// TodoList ---------------------------------------------------------------------
 const TodoList = (props: TodoListProps) => {
-  const {todoList, deleteTodoListItem, toggleTodoListItem} = props
+  const {todoList, deleteTodoListItem, toggleTodoListItem, goodTodoListItem} = props
   return (
     <List w="full">
       {
@@ -69,23 +81,34 @@ const TodoList = (props: TodoListProps) => {
             flag={v.done}
             key={v.id}
             id={v.id}
+            good={v.good}
             deleteTodoListItem={deleteTodoListItem}
             toggleTodoListItem={toggleTodoListItem}
+            goodTodoListItem={goodTodoListItem}
           />
         ))
       }
     </List>
   )
 }
+// --------------------------------------------------
 
-const TodoItem = (props: TodoItemProps) => {
-  const {item, flag , id, deleteTodoListItem, toggleTodoListItem} = props
+
+
+// TodoItem ---------------------------------------------------------------------
+const TodoItem = React.memo((props: TodoItemProps) => {
+  const {item, flag , id, good, deleteTodoListItem, toggleTodoListItem, goodTodoListItem} = props
+  const [count, setCount] = useState(good)
   const handleDeleteTodoListItem = () => {
     deleteTodoListItem(id)
   }
   const handleToggleTodoListItem = () => {
     toggleTodoListItem(id, flag)
   }
+  const handleGoodTodoListItem = useCallback(() => {
+    setCount((c) => c + 1)
+    goodTodoListItem(id, flag, count)
+  }, [count])
   return (
       <ListItem
         borderWidth="1px"
@@ -95,29 +118,38 @@ const TodoItem = (props: TodoItemProps) => {
         borderRadius="md"
         borderColor="gray.300"
       >
-        <li>
-          <Text mb="6">{item}</Text>
-          <Flex alignItems="center" justifyContent="flex-end">
-            <Button
-              onClick={handleToggleTodoListItem}
-              colorScheme={flag ? "pink" : "bule"}
-              variant="outline"
-              size="sm"
-            >
-              {flag ? "未完了リストへ" : "完了リストへ"}
-            </Button>
-            <IconButton
-              icon={<DeleteIcon />}
-              variant="unstyled"
-              aria-label="delete"
-              onClick={handleDeleteTodoListItem}
-            />
-          </Flex>
-        </li>
+        <Text mb="6">{item}</Text>
+        <Flex alignItems="center" justifyContent="flex-end">
+          <Button
+            onClick={handleToggleTodoListItem}
+            colorScheme={flag ? "pink" : "bule"}
+            variant="outline"
+            size="sm"
+          >
+            {flag ? "未完了リストへ" : "完了リストへ"}
+          </Button>
+          <IconButton
+            icon={<StarIcon />}
+            variant="unstyled"
+            aria-label="good"
+            onClick={handleGoodTodoListItem}
+          />
+            {good}
+          <IconButton
+            icon={<DeleteIcon />}
+            variant="unstyled"
+            aria-label="delete"
+            onClick={handleDeleteTodoListItem}
+          />
+        </Flex>
       </ListItem>
   )
-}
+})
+// --------------------------------------------------
 
+
+
+// TodoAdd ---------------------------------------------------------------------
 const TodoAdd = (props: TodoAddProps) => {
   const {onClick, inputEl, leftIcon, placeholder} = props
   return (
@@ -136,9 +168,12 @@ const TodoAdd = (props: TodoAddProps) => {
   )
 }
 
+// --------------------------------------------------
+
+
 
 function App() {
-  const { todoList, addTodoListItem, deleteTodoListItem, toggleTodoListItem}:any = useTodo()
+  const { todoList, addTodoListItem, deleteTodoListItem, toggleTodoListItem, goodTodoListItem}:any = useTodo()
   const inputEl = useRef<HTMLTextAreaElement>(null)
 
   // 方式 --------------------------------------------------
@@ -151,8 +186,6 @@ function App() {
     }
   }
 
-
-  console.log('Todoリスト', todoList);  
   const inCompList = todoList.filter((d: any) => {
     return !d.done;
   })
@@ -165,7 +198,6 @@ function App() {
   return (
     <>
     <Container centerContent p={{base: "4", md: "6"}} maxWidth="3xl">
-
       <TodoTitle
         title="todo進捗管理"
         size="h1"
@@ -190,6 +222,7 @@ function App() {
         todoList={inCompList}
         deleteTodoListItem={deleteTodoListItem}
         toggleTodoListItem={toggleTodoListItem}
+        goodTodoListItem={goodTodoListItem}
       />
 
 
@@ -203,6 +236,7 @@ function App() {
         todoList={compList}
         deleteTodoListItem={deleteTodoListItem}
         toggleTodoListItem={toggleTodoListItem}
+        goodTodoListItem={goodTodoListItem}
       />
     </Container>
     </>
@@ -210,3 +244,4 @@ function App() {
 }
 
 export default App;
+

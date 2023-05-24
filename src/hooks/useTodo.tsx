@@ -15,15 +15,17 @@ export const useTodo = () => {
     const FreshTodoItem = {
       content: t,
       id: ulid(),
-      done: false
+      done: false,
+      good: 0
     };
-    return todoData.addTodoData(FreshTodoItem).then((fItem) => {
+    return todoData.addTodoData(FreshTodoItem).then((fItem: any) => {
+      console.log("f", fItem)
       setTodoList([fItem, ...todoList]);
     });
   };
 
-  const deleteTodoListItem = (id: number) => {
-    todoData.deleteTodoData(id).then((dItem) => {
+  const deleteTodoListItem = (id: string) => {
+    todoData.deleteTodoData(id).then((dItem: any) => {
       const deleteTodoItem = todoList.filter((item: any) => {
         return item.id !== dItem
       })
@@ -32,10 +34,10 @@ export const useTodo = () => {
 
   }
 
-  const toggleTodoListItem = (id: number, done: boolean) => {
+  const toggleTodoListItem = (id: string, done: boolean) => {
     const todoItem = todoList.find((item: any) => item.id == id)
     const newTodoItem = { ...todoItem as {}, done: !done} 
-    todoData.updateTodoData(id, newTodoItem).then((updatedTodo) => {
+    todoData.updateTodoData(id, newTodoItem).then((updatedTodo: any) => {
       const newTodoList = todoList.map((item: any) =>
         item.id !== updatedTodo.id ? item : updatedTodo
       );
@@ -43,11 +45,20 @@ export const useTodo = () => {
     });
   }
 
+  const goodTodoListItem =  (id: string, done: boolean, good: number) => {
+   const goodItem = todoList.find((item: any) => item.id === id)
+   const newGoodItem = {...goodItem as {}, good: good}
+   todoData.updateTodoData(id, newGoodItem).then((updatedTodo: any) => {
+    setTodoList( done ? [updatedTodo] : [goodItem]);
+   })
+  }
+
   return {
     todoList,
     addTodoListItem,
     deleteTodoListItem,
-    toggleTodoListItem
+    toggleTodoListItem,
+    goodTodoListItem
   }
 
   
