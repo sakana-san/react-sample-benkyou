@@ -29,7 +29,6 @@ type TodoItemProps = {
   key: number
   item: string
   flag: boolean,
-  good: number,
   goodN: number,
   deleteTodoListItem: any
   toggleTodoListItem: any
@@ -86,7 +85,6 @@ const TodoList = (props: TodoListProps) => {
             flag={v.done}
             key={v.id}
             id={v.id}
-            good={v.good}
             goodN={v.good}
             deleteTodoListItem={deleteTodoListItem}
             toggleTodoListItem={toggleTodoListItem}
@@ -103,7 +101,7 @@ const TodoList = (props: TodoListProps) => {
 
 // TodoItem ---------------------------------------------------------------------
 const TodoItem = React.memo((props: TodoItemProps) => {
-  const {item, flag , id, good, goodN, deleteTodoListItem, toggleTodoListItem, goodTodoListItem} = props
+  const {item, flag , id, goodN, deleteTodoListItem, toggleTodoListItem, goodTodoListItem} = props
   const [count, setCount] = useState(goodN)
   const handleDeleteTodoListItem = () => {
     deleteTodoListItem(id)
