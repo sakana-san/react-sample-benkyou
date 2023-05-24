@@ -5,6 +5,7 @@ import * as todoData from "../api/todos"
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useState<string[]>([])
+  const [goodN, setGoodN] = useState(0)
 
   useEffect(() => {
     todoData.getAllTodosData().then((t: any) => {
@@ -45,21 +46,32 @@ export const useTodo = () => {
     });
   }
 
-  const goodTodoListItem =  (id: string, done: boolean, good: number) => {
-   const goodItem = todoList.find((item: any) => item.id === id)
-   const newGoodItem = {...goodItem as {}, good: good}
-   todoData.updateTodoData(id, newGoodItem).then((updatedTodo: any) => {
-    setTodoList( done ? [updatedTodo] : [goodItem]);
-   })
+  const goodTodoListItem = (id: string, done: boolean, good: number) => {
+    const goodItem = todoList.find((item: any) => item.id === id)
+    const newGoodItem = {...goodItem as {}, good: good}
+    todoData.updateTodoData(id, newGoodItem).then((updatedTodo: any) => {
+      todoList.forEach((v:any, i:number) => {
+        if (done) {
+          console.log("true")
+          if (v.id === updatedTodo.id && done) {
+            console.log("id",v.id)
+            console.log("updatedTodo.id",updatedTodo.id)
+            console.log("updatedTodo.content",updatedTodo.content)
+            console.log("updatedTodo.good",updatedTodo.good)
+            setGoodN(updatedTodo.good)
+          }
+        } else {
+          console.log("false")
+        }
+      })
+    })
   }
-
   return {
     todoList,
+    goodN,
     addTodoListItem,
     deleteTodoListItem,
     toggleTodoListItem,
     goodTodoListItem
-  }
-
-  
+  }  
 }

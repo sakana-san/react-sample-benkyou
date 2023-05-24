@@ -18,6 +18,7 @@ type TitleProps = {
 
 type TodoListProps = {
   todoList: string[]
+  goodN: Number,
   deleteTodoListItem: any
   toggleTodoListItem: any
   goodTodoListItem: any
@@ -29,6 +30,7 @@ type TodoItemProps = {
   item: string
   flag: boolean,
   good: number,
+  goodN: number,
   deleteTodoListItem: any
   toggleTodoListItem: any
   goodTodoListItem: any
@@ -74,7 +76,7 @@ const TodoTitle = memo((props: TitleProps) => {
 
 // TodoList ---------------------------------------------------------------------
 const TodoList = (props: TodoListProps) => {
-  const {todoList, deleteTodoListItem, toggleTodoListItem, goodTodoListItem} = props
+  const {todoList, goodN, deleteTodoListItem, toggleTodoListItem, goodTodoListItem} = props
   return (
     <List w="full">
       {
@@ -85,6 +87,7 @@ const TodoList = (props: TodoListProps) => {
             key={v.id}
             id={v.id}
             good={v.good}
+            goodN={v.good}
             deleteTodoListItem={deleteTodoListItem}
             toggleTodoListItem={toggleTodoListItem}
             goodTodoListItem={goodTodoListItem}
@@ -100,8 +103,8 @@ const TodoList = (props: TodoListProps) => {
 
 // TodoItem ---------------------------------------------------------------------
 const TodoItem = React.memo((props: TodoItemProps) => {
-  const {item, flag , id, good, deleteTodoListItem, toggleTodoListItem, goodTodoListItem} = props
-  const [count, setCount] = useState(good)
+  const {item, flag , id, good, goodN, deleteTodoListItem, toggleTodoListItem, goodTodoListItem} = props
+  const [count, setCount] = useState(goodN)
   const handleDeleteTodoListItem = () => {
     deleteTodoListItem(id)
   }
@@ -137,7 +140,7 @@ const TodoItem = React.memo((props: TodoItemProps) => {
             aria-label="good"
             onClick={handleGoodTodoListItem}
           />
-            {good}
+            {count}
           <IconButton
             icon={<DeleteIcon />}
             variant="unstyled"
@@ -176,7 +179,7 @@ const TodoAdd = (props: TodoAddProps) => {
 
 
 function App() {
-  const { todoList, addTodoListItem, deleteTodoListItem, toggleTodoListItem, goodTodoListItem}:any = useTodo()
+  const { todoList, goodN, addTodoListItem, deleteTodoListItem, toggleTodoListItem, goodTodoListItem}:any = useTodo()
   const inputEl = useRef<HTMLTextAreaElement>(null)
 
   // 方式 --------------------------------------------------
@@ -225,6 +228,7 @@ function App() {
       />
       <TodoList
         todoList={inCompList}
+        goodN={goodN}
         deleteTodoListItem={deleteTodoListItem}
         toggleTodoListItem={toggleTodoListItem}
         goodTodoListItem={goodTodoListItem}
@@ -240,6 +244,7 @@ function App() {
       /> 
       <TodoList
         todoList={compList}
+        goodN={goodN}
         deleteTodoListItem={deleteTodoListItem}
         toggleTodoListItem={toggleTodoListItem}
         goodTodoListItem={goodTodoListItem}
