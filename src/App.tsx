@@ -13,6 +13,7 @@ type TitleProps = {
   size: string
   fontSize: any
   mt: any
+  ml: any
 }
 
 type TodoListProps = {
@@ -46,7 +47,7 @@ type TodoAddProps = {
 
 // TodoTitle ---------------------------------------------------------------------
 const TodoTitle = memo((props: TitleProps) => {
-  const {title, size, fontSize, mt} = props
+  const {title, size, fontSize, mt, ml} = props
   return (
     <>
       <Heading
@@ -56,10 +57,12 @@ const TodoTitle = memo((props: TitleProps) => {
         w="full"
       >
         {title}
+        {
+          title === 'todo進捗管理' ?
+          <Button ml={ml}><Link to="./Practice">練習ページへ</Link></Button> :
+          ''
+        } 
       </Heading>
-      <p>
-        <Link to="/Hello">Hello</Link>
-      </p>
     </>
 
   )
@@ -203,6 +206,7 @@ function App() {
         size="h1"
         fontSize={{base: "2xl", md: "3xl"}}
         mt="8"
+        ml="10"
       />
       <TodoAdd
         onClick={handleAddTodoListItem}
@@ -217,6 +221,7 @@ function App() {
         size="h2"
         fontSize={{base: "xl", md: "2xl"}}
         mt="8"
+        ml="10"
       />
       <TodoList
         todoList={inCompList}
@@ -231,6 +236,7 @@ function App() {
         size="h2"
         fontSize={{base: "xl", md: "2xl"}}
         mt="8"
+        ml="10"
       /> 
       <TodoList
         todoList={compList}

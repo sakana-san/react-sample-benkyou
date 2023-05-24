@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme/theme'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import {Hello} from './components/Hello';
+import {Practice} from './components/Practice';
 import App from './App';
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
-  { path: "/Hello", element: <Hello /> }
+  { path: "/Practice", element: <Practice /> }
 ])
 
 const root = ReactDOM.createRoot(

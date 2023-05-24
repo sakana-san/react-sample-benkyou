@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Hello = () => {
+export const Practice = () => {
   return (
     <div>テストです</div>
   )
