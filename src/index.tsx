@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       {index: true, element: <App />},
       {path: "Practice", element: <Practice /> },
       {path: "Radio", element: <Radio /> },
-      {path: "Counter", element: <Counter initVal={0} /> },
+      {path: "Counter", element: <Counter /> },
     ]
   }
 ])

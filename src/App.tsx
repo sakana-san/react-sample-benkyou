@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, memo, useCallback} from "react";
+import React, { useState, useRef, memo, useCallback} from "react";
 import { Heading, Container } from "@chakra-ui/react";
 import { DeleteIcon, AddIcon, StarIcon } from "@chakra-ui/icons";
 import { List, ListItem, Text, Flex, IconButton, Textarea, Button } from "@chakra-ui/react";
