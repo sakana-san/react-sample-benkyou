@@ -1,7 +1,5 @@
-import React, {useEffect, useState, useRef, memo, useCallback} from "react";
 import { chakra, Heading, Container } from "@chakra-ui/react";
-import { DeleteIcon, AddIcon, StarIcon } from "@chakra-ui/icons";
-import { List, ListItem, Text, Flex, IconButton, Textarea, Button } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
 
 
