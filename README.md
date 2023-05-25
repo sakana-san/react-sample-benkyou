@@ -1,3 +1,44 @@
+# react JSX内のmap
+例
+const CheckedItems = (props: CHP) => {
+  const {onChange, checked} = props
+  return (
+    <div>
+      {values.map((value) => (
+          <label key={value.id}>
+          <input
+            type="checkbox"
+            value={value.item}
+            onChange={onChange}
+            checked={checked.includes(value.item)}
+          />
+          {value.item}
+        </label>
+      ))}
+    </div>
+  )
+}
+
+# react onChangeイベントの型
+type RProps = {
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
