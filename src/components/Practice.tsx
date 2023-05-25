@@ -9,14 +9,14 @@ export const Practice = () => {
       <Tabs variant='soft-rounded' colorScheme='green'>
         <TabList>
           <Tab>練習1</Tab>
-          <Tab>Tab 2</Tab>
+          <Tab>練習2</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
             <Button ml="10"><Link to='/Radio'>ラジオページ</Link></Button>
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <Button ml="10"><Link to='/Counter'>useStateとuseReducer</Link></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>

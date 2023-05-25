@@ -7,6 +7,7 @@ import App from './App';
 import {Layout} from './Layout';
 import {Practice} from './components/Practice';
 import { Radio } from './components/Radio';
+import { Counter } from './components/Counter';
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       {index: true, element: <App />},
       {path: "Practice", element: <Practice /> },
       {path: "Radio", element: <Radio /> },
+      {path: "Counter", element: <Counter initVal={0} /> },
     ]
   }
 ])
