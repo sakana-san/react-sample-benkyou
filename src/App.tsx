@@ -57,11 +57,6 @@ const TodoTitle = memo((props: TitleProps) => {
         w="full"
       >
         {title}
-        {
-          title === 'todo進捗管理' ?
-          <Button ml={ml}><Link to="./Practice">練習ページへ</Link></Button> :
-          ''
-        } 
       </Heading>
     </>
 
