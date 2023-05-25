@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Flex, Button, Box, SimpleGrid } from "@chakra-ui/react"
+import { Box, SimpleGrid } from "@chakra-ui/react"
 
 
 type RProps = {
@@ -9,39 +9,36 @@ type RProps = {
 const radioAry = [
   {
     "id": 1,
-    "item": "赤"
+    "item": "red"
   },
   {
     "id": 2,
-    "item": "青"
+    "item": "blue"
   },
   {
     "id": 3,
-    "item": "黄"
+    "item": "yellow"
   }
 ]
 const RadioItems = (props: RProps) => {
   const { onChange, checked } = props
   return (
     <>
-      <Box bg='tomato' height='80px'>
-        <label>
-          <input type="radio" />
-          赤
-        </label>
-      </Box>
-      <Box bg='tomato' height='80px'>
-        <label>
-          <input type="radio" />
-          青
-        </label>
-      </Box>
-      <Box bg='tomato' height='80px'>
-        <label>
-          <input type="radio" />
-          黄
-        </label>
-      </Box>
+       {
+        radioAry.map((v) => (
+          <Box bg={v.item} height='80px'>
+            <label key={v.id}>
+              <input
+                type="radio"
+                value={v.item}
+                onChange={onChange}
+                checked={checked === v.item}
+              />
+              {v.item}
+          </label>
+          </Box>
+        ))
+      }
     </>
   )
 }
@@ -54,7 +51,10 @@ export const Radio = () => {
   return (
     <>
       <p style={{textAlign: "center"}}>現在選択されている値</p>
-      <p style={{textAlign: "center"}}>{}</p>
+      <p style={{textAlign: "center"}}>
+        {gV}
+      </p>
+      <Box bg={gV} w='100%' p={4} />
       <SimpleGrid minChildWidth='120px' spacing='40px' padding="10">
         <RadioItems onChange={onChange} checked={gV} />
       </SimpleGrid>
