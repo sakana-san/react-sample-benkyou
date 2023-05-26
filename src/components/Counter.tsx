@@ -2,16 +2,18 @@ import React, {useState, useReducer} from "react"
 import { Stack, Button, Text, Box } from "@chakra-ui/react"
 
 type CounterProps = {
-  initVal: number
+  initVal: number,
+  usText: string
+  urText: string
 }
-
 const Hook1 = (props: CounterProps) => {
-  const {initVal} = props
+  const {initVal, usText} = props
   const [getCount, setCount] = useState(initVal)
   return (
     <>
      <Box>
         <Text fontSize='4xl' align='center'>useStateの場合</Text>
+        <Text fontSize='1xl' align='center'>{usText}</Text>
         <Text fontSize='3xl' align='center'>勘定: { getCount }</Text>
         <Stack spacing={4} direction='row' align='center' padding="10">
           <Button colorScheme='teal' size='lg' onClick={() => {setCount((c) => c + 1) }}>
@@ -51,12 +53,14 @@ const reducer = (count: number, action: Action) => {
 }
 
 const Hook2 = (props: CounterProps) => {
-  const {initVal} = props
+  const {initVal, urText, usText} = props
   const [getCount, dispatch] = useReducer(reducer, initVal)
   return (
     <>
       <Box>
         <Text fontSize='4xl' align='center'>useReducerの場合</Text>
+        <Text fontSize='1xl' align='center'>{urText}</Text>
+        <Text fontSize='1xl' align='center'>{usText}</Text>
         <Text fontSize='3xl' align='center'>勘定: { getCount }</Text>
         <Stack spacing={4} direction='row' align='center' padding="10">
           <Button colorScheme='teal' size='lg' onClick={() => {dispatch('増加') }}>
@@ -80,8 +84,8 @@ const Hook2 = (props: CounterProps) => {
 export const Counter = () => {
   return (
     <>
-      <Hook1  initVal={0} />
-      <Hook2 initVal={0} />
+      <Hook1 initVal={0} usText="状態の保持と管理。const [状態, 更新関数] = useState(初期値)" urText='' />
+      <Hook2 initVal={0} urText={'状態の保持と管理。const [状態, 更新関数(dispatch)] = useReducer(reducer, reducerに渡される初期値)。'} usText="useStateより複雑な用途時に使用する。" />
     </>
   )
 }
