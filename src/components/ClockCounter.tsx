@@ -85,10 +85,37 @@ const CountBrowser = (props: CountProps) => {
   )
 }
 
+
+
+type IntervalProps = {
+  init:  number
+  display: boolean
+}
+
+const IntervalCountBrowser = (props: IntervalProps) => {
+  const {init, display} = props
+  const [getCount, setCount] = useState(init)
+  const [getDisplay, setDisplay] = useState(display)
+  return (
+    <>
+      <Text fontSize='3xl' align='center'>現在の回数: {getCount}</Text>
+      <Stack spacing={4} direction='row' align='center' padding="10">
+      <Button colorScheme='teal' size='lg' onClick={() => setDisplay(!getDisplay) }>{getDisplay ? 'タイマー表示' : 'タイマーを非表示'}</Button>
+        <Button colorScheme='teal' size='lg' onClick={() => setCount(0) }>初期化</Button>
+      </Stack>
+    </>
+  )
+}
+
 const ClockCounter = () => {
   return (
     <>
-      <CountBrowser init={0} ueText='再描画後にprops,stateの値を更新する。useEffect(関数(副作用), [更新値])。' ueText2='第二引数、空の場合初回のみ、値有りの場合更新値を反映。' />
+      <CountBrowser
+        init={0}
+        ueText='再描画後にprops,stateの値を更新する。useEffect(関数(副作用), [更新値])。'
+        ueText2='第二引数、空の場合初回のみ、値ありの場合更新値を反映。'
+      />
+      <IntervalCountBrowser  init={0} display={false} />
     </>
   )
 }
