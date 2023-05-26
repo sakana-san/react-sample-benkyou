@@ -1,58 +1,8 @@
 import React, {useState, useEffect} from "react"
-import { Stack, Button, Text, Box } from "@chakra-ui/react"
-
-type CounterProps = {
-  initVal: number,
-  usText: string
-  urText: string
-}
-const Hook1 = (props: CounterProps) => {
-  const {initVal, usText} = props
-  const [getCount, setCount] = useState(initVal)
-  return (
-    <>
-     <Box>
-        <Text fontSize='4xl' align='center'>useStateの場合</Text>
-        <Text fontSize='1xl' align='center'>{usText}</Text>
-        <Text fontSize='3xl' align='center'>勘定: { getCount }</Text>
-        <Stack spacing={4} direction='row' align='center' padding="10">
-          <Button colorScheme='teal' size='lg' onClick={() => {setCount((c) => c + 1) }}>
-          増加
-          </Button>
-          <Button colorScheme='teal' size='lg' onClick={() => {setCount((c) => c - 1) }}>
-          減少
-          </Button>
-          <Button colorScheme='teal' size='lg' onClick={() => {setCount((c) => c * 2) }}>
-          倍増
-          </Button>
-          <Button colorScheme='teal' size='lg' onClick={() => {setCount(0) }}>
-          初期化
-          </Button>
-        </Stack>
-      </Box>
-    </>
-  )
-}
+import { Stack, Button, Text } from "@chakra-ui/react"
 
 
-
-type Action = '増加' | '減少' | '倍増' | '初期化'
-const reducer = (count: number, action: Action) => {
-  switch (action) {
-    case '増加':
-      return count + 1
-    case '減少':
-      return count - 1
-    case '倍増':
-      return count * 2
-    case '初期化':
-      return 0
-    default:
-      return count
-  }
-}
-
-
+// useEffect 第二引数ありの場 ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 type CountProps = {
   init:  number,
   ueText: string,
@@ -85,27 +35,73 @@ const CountBrowser = (props: CountProps) => {
   )
 }
 
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
+
+
+
+// useEffect 第二引数が空の場合 ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 type IntervalProps = {
-  init:  number
+  init: number
   display: boolean
+  ueText3: string
+}
+type timerProps = {
+  count: number,
+  autoCount: any
+}
+
+const Timer = (props: timerProps) => {
+  const {count, autoCount} = props
+  const zouka = () => {
+    autoCount((c: number) => c + 1)
+    console.log('カウント+1')
+  }
+  const callF = () => {
+    console.log("副作用実行")
+    const timer = setInterval(zouka, 1000)
+    return () => {
+      console.log('timer削除')
+      console.log('timer部品解除時、再描画時、return内の処理が発火')
+      autoCount(0)
+      clearInterval(timer)
+    }
+  }
+  useEffect(callF, [])
+  return (
+    <>
+      <Text fontSize='3xl' align='center'>現在の回数: {count}</Text>
+    </>
+  )
 }
 
 const IntervalCountBrowser = (props: IntervalProps) => {
-  const {init, display} = props
+  const {init, display, ueText3} = props
   const [getCount, setCount] = useState(init)
   const [getDisplay, setDisplay] = useState(display)
+  const handleClick = () => {
+    setCount(0)
+    setDisplay(false)
+  }
   return (
     <>
-      <Text fontSize='3xl' align='center'>現在の回数: {getCount}</Text>
+      <Text fontSize='4xl' align='center'>useEffect</Text>
+      <Text fontSize='1xl' align='center'>{ueText3}</Text>
+      {
+        getDisplay ? 
+        <Timer count={getCount} autoCount={setCount}　/> :
+        <Text fontSize='3xl' align='center'>現在の回数: 0</Text>
+      }
       <Stack spacing={4} direction='row' align='center' padding="10">
-      <Button colorScheme='teal' size='lg' onClick={() => setDisplay(!getDisplay) }>{getDisplay ? 'タイマー表示' : 'タイマーを非表示'}</Button>
-        <Button colorScheme='teal' size='lg' onClick={() => setCount(0) }>初期化</Button>
+        <Button colorScheme='teal' size='lg' onClick={() => setDisplay(!getDisplay) }>{getDisplay ? 'タイマー表示' : 'タイマーを非表示'}</Button>
+        <Button colorScheme='teal' size='lg' onClick={() => handleClick() }>初期化</Button>
       </Stack>
     </>
   )
 }
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 const ClockCounter = () => {
   return (
@@ -113,9 +109,9 @@ const ClockCounter = () => {
       <CountBrowser
         init={0}
         ueText='再描画後にprops,stateの値を更新する。useEffect(関数(副作用), [更新値])。'
-        ueText2='第二引数、空の場合初回のみ、値ありの場合更新値を反映。'
+        ueText2='第二引数に値があるので、描画後、更新値をブラウザに反映。'
       />
-      <IntervalCountBrowser  init={0} display={false} />
+      <IntervalCountBrowser init={0} display={false} ueText3='第二引数が空なので、初回のみ実行' />
     </>
   )
 }
