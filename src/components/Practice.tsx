@@ -10,6 +10,7 @@ export const Practice = () => {
         <TabList>
           <Tab>練習1</Tab>
           <Tab>練習2</Tab>
+          <Tab>練習3</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -17,6 +18,9 @@ export const Practice = () => {
           </TabPanel>
           <TabPanel>
             <Button ml="10"><Link to='/Counter'>useStateとuseReducer</Link></Button>
+          </TabPanel>
+          <TabPanel>
+            <Button ml="10"><Link to='/ClockCounter'>useEffect</Link></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
