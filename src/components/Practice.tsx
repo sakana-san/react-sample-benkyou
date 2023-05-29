@@ -11,6 +11,7 @@ export const Practice = () => {
           <Tab>練習1</Tab>
           <Tab>練習2</Tab>
           <Tab>練習3</Tab>
+          <Tab>練習4</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -21,6 +22,9 @@ export const Practice = () => {
           </TabPanel>
           <TabPanel>
             <Button ml="10"><Link to='/ClockCounter'>useEffect</Link></Button>
+          </TabPanel>
+          <TabPanel>
+            <Button ml="10"><Link to='/ButtonCount'>ButtonCount</Link></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
