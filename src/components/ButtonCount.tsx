@@ -45,6 +45,10 @@ export const ButtonCount = (props: CountProps) => {
   }
   return (
     <>
+      <Text fontSize='4xl' align='center'>React.memo</Text>
+      <Text fontSize='1xl' align='center'>propsの値と比較して、同じ値なら現状維持、そうじゃなければ再生成。</Text>
+      <Text fontSize='1xl' align='center'>尚、コールバック関数をpropsで受け取った場合、同じ値でも再生成されてしまう。</Text>
+      <Text fontSize='1xl' align='center'></Text>
       <Result init={getCount} text='いろはボタン' />
       <Result init={getCount2} text='ほへとボタン' />
       <Stack spacing={4} direction='row' align='center' padding="10">

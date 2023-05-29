@@ -9,7 +9,8 @@ import {Practice} from './components/Practice';
 import { Radio } from './components/Radio';
 import { Counter } from './components/Counter';
 import ClockCounter from './components/ClockCounter';
-import {ButtonCount} from './components/ButtonCount';
+import { ButtonCount } from './components/ButtonCount';
+import { ButtonCount2 } from './components/ButtonCount2';
 
 const router = createBrowserRouter([
   { path: "/", 
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
       {path: "Radio", element: <Radio /> },
       {path: "Counter", element: <Counter /> },
       {path: "ClockCounter", element: <ClockCounter />},
-      {path: "ButtonCount", element: <ButtonCount init={0} text='' /> }
+      {path: "ButtonCount", element: <ButtonCount init={0} text='' /> },
+      { path: "ButtonCount2", element: <ButtonCount2 init={0} text='' /> }
     ]
   }
 ])

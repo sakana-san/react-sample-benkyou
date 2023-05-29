@@ -12,6 +12,7 @@ export const Practice = () => {
           <Tab>練習2</Tab>
           <Tab>練習3</Tab>
           <Tab>練習4</Tab>
+          <Tab>練習5</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -24,7 +25,10 @@ export const Practice = () => {
             <Button ml="10"><Link to='/ClockCounter'>useEffect</Link></Button>
           </TabPanel>
           <TabPanel>
-            <Button ml="10"><Link to='/ButtonCount'>ButtonCount</Link></Button>
+            <Button ml="10"><Link to='/ButtonCount'>React.memo</Link></Button>
+          </TabPanel>
+          <TabPanel>
+            <Button ml="10"><Link to='/ButtonCount2'>useCallback</Link></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
