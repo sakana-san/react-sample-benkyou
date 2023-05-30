@@ -13,6 +13,7 @@ export const Practice = () => {
           <Tab>練習3</Tab>
           <Tab>練習4</Tab>
           <Tab>練習5</Tab>
+          <Tab>練習6</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -29,6 +30,9 @@ export const Practice = () => {
           </TabPanel>
           <TabPanel>
             <Button ml="10"><Link to='/ButtonCount2'>useCallback</Link></Button>
+          </TabPanel>
+          <TabPanel>
+            <Button ml="10"><Link to='/Keisan'>useMemo</Link></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
