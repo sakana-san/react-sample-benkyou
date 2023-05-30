@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       {path: "ClockCounter", element: <ClockCounter />},
       {path: "ButtonCount", element: <ButtonCount init={0} text='' /> },
       { path: "ButtonCount2", element: <ButtonCount2 init={0} text='' /> },
-      { path: "Keisan", element: <Keisan init={0} text='' onClick={() => void {} } /> }
+      { path: "Keisan", element: <Keisan /> }
     ]
   }
 ])
