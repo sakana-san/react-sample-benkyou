@@ -1,5 +1,5 @@
-import React, {useState, useMemo, useRef, useEffect } from "react"
-import { Flex, Stack, Button, Text, Box, SimpleGrid,Input, Divider } from "@chakra-ui/react"
+import React, {useState, useRef, useEffect } from "react"
+import { Flex, Button, Text, Box, Input, Divider } from "@chakra-ui/react"
 
 
 
@@ -50,7 +50,7 @@ const Sample1 = () => {
 
 
 
-// 文字入力 ----------------------------------------------------------------------
+// アップロード ----------------------------------------------------------------------
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 const UPLOAD_OKURE = 5000
 const Sample2 = () => {
