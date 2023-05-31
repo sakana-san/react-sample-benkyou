@@ -14,6 +14,7 @@ export const Practice = () => {
           <Tab>練習4</Tab>
           <Tab>練習5</Tab>
           <Tab>練習6</Tab>
+          <Tab>練習7</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -33,6 +34,9 @@ export const Practice = () => {
           </TabPanel>
           <TabPanel>
             <Button ml="10"><Link to='/Keisan'>useMemo</Link></Button>
+          </TabPanel>
+          <TabPanel>
+            <Button ml="10"><Link to='/InputFocus'>useRef</Link></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
