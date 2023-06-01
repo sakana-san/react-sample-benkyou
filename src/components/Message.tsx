@@ -66,15 +66,37 @@ const Mago = () => {
 
 
 // 勘定数珠つなぎ ----------------------------------------------------------------------------------------------------------------------------------
-const CountText = createContext('')
+const CountText = createContext(0)
 // @ts-ignore
 const CountProvider = ({ children }) => {
-  const [getCount, setCount] = useState<number>(0)
+  const [getCount, setCount] = useState(0)
   return (
     // @ts-ignore
-    <CountText.Provider value={{getCount, setCount}}>
+    <CountText.Provider value={[ getCount, setCount ]}>
       {children}
     </CountText.Provider>
+  )
+}
+
+const CountBox = () => {
+  return (
+    <>
+      <CountDisplay />
+    </>
+  )
+}
+
+const CountDisplay = () => {
+  // @ts-ignore
+  const [getCount, setCount] = useContext(CountText)
+  const onClick = () => {
+    setCount((c: number) => c + 1)
+  }
+  return (
+    <>
+      <Text fontSize='4xl' align='center'>{getCount}</Text>
+      <Button colorScheme='teal' size='lg' onClick={onClick}>+1ボタン</Button>
+    </>
   )
 }
 
@@ -86,18 +108,20 @@ export const Message = () => {
   const message = 'いろはにほへとちりぬるを'
   return (
     <>
-      <Text fontSize='4xl' align='center'>useConText</Text>
+      <Text fontSize='4xl' align='center'>useConText1</Text>
       <Text fontSize='1xl' align='center'>propsで数珠つなぎをしなくても、子孫に直接渡せる。</Text>
       <SampleContext.Provider value={message}>
         <ConsumerComponent />
       </SampleContext.Provider>
       <Divider />
+      <Text fontSize='4xl' align='center'>useConText2</Text>
       <TextProvider>
         <Oya />
       </TextProvider>
       <Divider />
+      <Text fontSize='4xl' align='center'>useConText3</Text>
       <CountProvider>
-
+        <CountBox />
       </CountProvider>
     </>
   )
