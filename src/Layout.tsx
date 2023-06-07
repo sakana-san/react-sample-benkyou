@@ -22,6 +22,9 @@ export const Layout = () => {
               <li style={{listStyle: 'none'}}>
               <Button ml="10"><Link to='Practice'>練習ページ</Link></Button>
               </li>
+              <li style={{ listStyle: 'none' }}>
+                <Button ml="10"><Link to='RepeatPractice'>繰り返す練習ページ</Link></Button>
+              </li>
             </Flex>
           </nav>
         </header>

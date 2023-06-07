@@ -38,6 +38,8 @@ const Hook1 = (props: CounterProps) => {
 
 type Action = '増加' | '減少' | '倍増' | '初期化'
 const reducer = (count: number, action: Action) => {
+  console.log('count', count)
+  console.log('action', action)
   switch (action) {
     case '増加':
       return count + 1

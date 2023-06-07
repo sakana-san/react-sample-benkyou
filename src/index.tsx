@@ -14,6 +14,7 @@ import { ButtonCount2 } from './components/ButtonCount2';
 import { Keisan } from './components/Keisan';
 import { InputFocus } from './components/InputFocus';
 import { Message } from './components/Message';
+import { RepeatPractice } from './components/RepeatPractice';
 
 const router = createBrowserRouter([
   { path: "/", 
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     children: [
       {index: true, element: <App />},
       {path: "Practice", element: <Practice /> },
+      { path: "RepeatPractice", element: <RepeatPractice /> },
       {path: "Radio", element: <Radio /> },
       {path: "Counter", element: <Counter /> },
       {path: "ClockCounter", element: <ClockCounter />},
