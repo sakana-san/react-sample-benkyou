@@ -24,6 +24,12 @@ type RProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
+# react onCickイベントの型の初期値
+type sampleProps: {
+  onClick: () => void
+}
+<Sample onClick={()=> {}} />
+
 
 
 
