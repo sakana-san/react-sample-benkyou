@@ -1,8 +1,8 @@
-import React, {useState, useReducer} from "react"
+import React, {useState, useReducer, useEffect, useCallback, useMemo} from "react"
 import { Link } from "react-router-dom"
-import {  Stack, Box, Text, Flex, Button, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { Stack, Box, Text, Flex, Button, Divider, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
-
+// useState useReduce start ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
 type CP = {
   init: number
 }
@@ -62,6 +62,7 @@ const Sample1 = (props: CP) => {
           }
         </Stack>
       </Box>
+      <Divider colorScheme="blue" />
     </>
   )
 }
@@ -145,16 +146,174 @@ const Sample2 = (props: jankenProps) => {
           }
         </Stack>
       </Box>
+      <Divider colorScheme="blue" />
+    </>
+  )
+}
+// useState useReduce end ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
+
+
+
+
+
+// useEffect start ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
+type countProps = {
+  init: number
+}
+const Sample3 = (props: countProps) => {
+  const { init } = props
+  const [getC, setC] = useState(init)
+  const callF = () =>{
+    document.title = `${getC}回クリックされました。`
+  }
+  useEffect(callF, [getC])
+  const handleClick = (str: string) => {
+    
+    if (str === '増加') {
+      setC((c) => c + 1)
+    } else {
+      setC(0)
+    }
+  }
+
+  return(
+    <>
+      <Text fontSize='4xl' align='center'>useEffect</Text>
+      <Text fontSize='3xl' align='center'>現在の回数: {getC}</Text>
+      <Stack spacing={4} direction='row' align='center' padding="10">
+        <Button colorScheme='teal' size='lg' onClick={() => handleClick('増加')}>+1</Button>
+        <Button colorScheme='teal' size='lg' onClick={() => handleClick('初期化')}>初期化</Button>
+      </Stack>
+      <Divider colorScheme="blue" />
     </>
   )
 }
 
+type timerProps = {
+  init: number,
+  display: boolean
+}
+type cProps = {
+  count: number,
+  autCount: any
+}
+const Timer = (props: cProps) => {
+  const { count, autCount } = props
+  const callF = () => {
+    console.log('クリック')
+    const time = setInterval(() => {
+      autCount((c: number) => c + 1)
+    }, 1000)
+    return () => {
+      console.log('timer削除。timer部品解除時、再描画時、return内の処理が発火')
+      autCount(0)
+      clearInterval(time)
+    }
+  }
+
+  useEffect(callF, [])
+  return (
+    <>
+      <Text fontSize='3xl' align='center'>現在の回数: {count}</Text>
+    </>
+  )
+
+}
+
+const Sample4 = (props: timerProps) => {
+  const {init, display} = props
+  const [getC, setC] = useState(init)
+  const [getD, setD] = useState(display)
+
+  const handleClick = () => {
+    setD(false)
+  }
+  return (
+    <>
+      <Text fontSize='4xl' align='center'>useEffect</Text>
+      <Text fontSize='1xl' align='center'>タイマー</Text>
+      {
+        getD ?
+          <Timer count={getC} autCount={setC} /> :
+          <Text fontSize='3xl' align='center'>現在の回数: 0</Text>
+      }
+      <Stack spacing={4} direction='row' align='center' padding="10">
+        <Button colorScheme='teal' size='lg' onClick={() => { setD(!getD) }}>{getD ? 'タイマー中止' : 'タイマー実行'}</Button>
+        <Button colorScheme='teal' size='lg' onClick={() => handleClick()}>初期化</Button>
+      </Stack>
+    </>
+  )
+}
+
+// useEffect end ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
+
+
+
+// reactMemo reactcallback start ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
+type sp5Props = {
+  init: number
+  text: string
+}
+
+type onClickProps = {
+  text: string
+  onClick: () => void
+}
+const Result = (props: sp5Props) => {
+  const {init, text} = props
+  return (
+    <>
+      <p>{text}: {init}</p>
+    </>
+  )
+}
+const Hbutton = React.memo((props: onClickProps) => {
+  const {text, onClick} = props
+  console.log(`${text}がクリックされた`)
+  return (
+    <>
+      <Stack spacing={4} direction='row' align='center' padding="10">
+        <Button colorScheme='teal' size='lg' onClick={onClick}>
+          {text}
+        </Button>
+      </Stack>
+    </>
+  )
+})
+const Sample5 = (props: sp5Props) => {
+  const {init} = props
+  const [getC, setC] = useState(init)
+  const [getC2, setC2] = useState(init)
+  const handleIroha = useCallback(() => {
+    setC((c) => c + 1)
+  }, [getC])
+  const handleHoheto = useCallback(() => {
+    setC2((c) => c + 1)
+  }, [getC2])
+  return (
+    <>
+      <Text fontSize='4xl' align='center'>React.memo</Text>
+      <Result init={getC} text='いろはボタン' />
+      <Result init={getC2} text='ほへとボタン' />
+      <Hbutton text='いろはボタン' onClick={handleIroha}  />
+      <Hbutton text='ほへとボタン' onClick={handleHoheto} />
+      <Divider />
+    </>
+  )
+
+}
+
+
+// useMemo end ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
 
 export const RepeatPractice = () => {
   return (
     <>
       <Sample1 init={0} />
       <Sample2 init={0} />
+      <Sample3 init={0} />
+      <Sample4 init={0} display={false} />
+      <Sample5 init={0} text='' />
     </>
   )
 }
