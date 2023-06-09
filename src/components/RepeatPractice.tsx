@@ -1,6 +1,6 @@
-import React, {useState, useReducer, useEffect, useCallback, useMemo} from "react"
+import React, {useState, useReducer, useEffect, useCallback, useMemo, useRef} from "react"
 import { Link } from "react-router-dom"
-import { Stack, Box, Text, Flex, Button, Divider, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { Stack, Box, Text, Flex, Button, Divider, Input, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 // useState useReduce start ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
 type CP = {
@@ -306,6 +306,55 @@ const Sample5 = (props: sp5Props) => {
 
 // useMemo end ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
 
+// useRef ーーーーーーーーーーーーーーーーーーーーーーーーーーーー----------------------------------------------
+
+const InputContents = () => {
+  const InputObjectRef = useRef<HTMLInputElement>(null)
+  const [getT, setT] = useState('')
+  const handleClick = () => {
+    if (InputObjectRef.current !== null) {
+      setT(InputObjectRef.current.value)
+    }
+  }
+  const handleReset = () => {
+    if (InputObjectRef.current !== null) {
+      setT('')
+      InputObjectRef.current.value = ''
+    }
+  }
+  useEffect(() => {
+    console.log('再生成しますよ！')
+  })
+  return (
+    <>
+      <Text fontSize='4xl' align='center' mt='5'>useRef1</Text>
+      <Flex justify='center' mb='10'>
+        <Box mr='20' padding='0'>
+          <Box mt='10' >
+            <Input type='text' ref={InputObjectRef} variant='filled' placeholder='入力してください' mb='4' />
+            <Button colorScheme='teal' size='lg' mr='10' onClick={handleClick}>入力値</Button>
+            <Button colorScheme='teal' size='lg' onClick={handleReset}>初期化</Button>
+          </Box>
+        </Box>
+        <Box mr='20' padding='0 20'>
+          <Text fontSize='2xl' align='left'>値: {getT}</Text>
+        </Box>
+      </Flex>
+    </>
+  )
+}
+const Sample6 = () => {
+  return (
+    <>
+      <Text fontSize='4xl' align='center'>useRef</Text>
+      <Text fontSize='1xl' align='center'>部品の値を保持、値を更新してもしても部品が再生成されない。</Text>
+      <Text fontSize='1xl' align='center'>useStateは値保持と更新時、再生成。useRefは値保持と更新時、非再生成。</Text>
+      <InputContents />
+      <Divider />
+    </>
+  )
+}
+
 export const RepeatPractice = () => {
   return (
     <>
@@ -314,6 +363,7 @@ export const RepeatPractice = () => {
       <Sample3 init={0} />
       <Sample4 init={0} display={false} />
       <Sample5 init={0} text='' />
+      <Sample6 />
     </>
   )
 }

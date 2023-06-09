@@ -14,6 +14,7 @@ import { ButtonCount2 } from './components/ButtonCount2';
 import { Keisan } from './components/Keisan';
 import { InputFocus } from './components/InputFocus';
 import { Message } from './components/Message';
+import { DragDrop } from './components/DragDrop';
 import { RepeatPractice } from './components/RepeatPractice';
 
 const router = createBrowserRouter([
@@ -30,7 +31,8 @@ const router = createBrowserRouter([
       { path: "ButtonCount2", element: <ButtonCount2 init={0} text='' /> },
       { path: "Keisan", element: <Keisan /> },
       { path: "InputFocus", element: <InputFocus /> },
-      { path: "Message", element: <Message /> }
+      { path: "Message", element: <Message /> },
+      { path: "DragDrop", element: <DragDrop /> }
     ]
   }
 ])
