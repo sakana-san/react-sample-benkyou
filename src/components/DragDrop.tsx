@@ -80,18 +80,55 @@ const useDragElemetns = (isStyleTransform: boolean = true): [
     horizontal: null,
     vertical: null
   })
+  // .draggableが追加されていない要素がドラッグされないようにする
+  const isDraggable = (): boolean => draggingElement.current ? draggingElement.current.classList.contains('draggable') : false;
+
+
+
+
   const handleDown = (e: React.MouseEvent<EventTarget & HTMLElement>): void => {
     draggingElement.current = e.currentTarget
-    
+
+    //ドラッグした要素に.draggableクラスが指定されていなければ終了
+    if (!isDraggable()) return;
+
     // 現在のtransform: translate()のx, y値を取得す
     const matrix = new DOMMatrix(getComputedStyle(draggingElement.current).transform)
     zenkainoTranslate.current = {
       x: matrix.translateSelf().e,
       y: matrix.translateSelf().f
     }
-    console.log(zenkainoTranslate.current)
+    const draggableElements = document.getElementsByClassName("draggable") as HTMLCollectionOf<HTMLElement>
+    for (let i = 0; i < draggableElements.length; i++) {
+      draggableElements[i].style.zIndex = `1000`;
+    }
+    draggingElement.current.style.position = 'relative';
+    draggingElement.current.style.zIndex = `1001`;
+
+    // 押し込んだときのページの左上(0, 0)からのカーソルの座標
+    const x = e.pageX
+    const y = e.pageY
+    startPoint.current = {x, y}
+
+    // 押し込んでいることを示すisDownをtrueに切り替える
+    setMouseStatus(prevMouseStatus => ({
+      ...prevMouseStatus,
+      isUp: false,
+      isDown: true
+    }))
   }
+
+
+
   const handleMove = (e: MouseEvent): void => {
+    // 押し込んでいなければ終了
+    if (!draggingElement.current) return;
+
+    //ドラッグした要素に.draggableクラスが指定されていなければ終了
+    if (!isDraggable()) return;
+
+    // テキストをdraggableにした場合に、ドラッグしたときにテキストが選択されないようにする
+    e.preventDefault();
     const differenceX = e.pageX - startPoint.current.x
     const differenceY = e.pageY - startPoint.current.y
 
@@ -127,6 +164,14 @@ const useDragElemetns = (isStyleTransform: boolean = true): [
 
   }
   const handleUp = (e: MouseEvent): void => {
+    // 押し込んでいなければ終了
+    if (!draggingElement.current) return;
+
+    if (!isDraggable()) return;
+
+    // ドロップ＝押し込みをやめたということで空にする
+    draggingElement.current = null;
+
     // 押し込みをやめたことを示すisUpをtrueに切り替え、isDownとisMoveをfalseに戻す
     setMouseStatus(prevMouseStatus => ({
       ...prevMouseStatus,
@@ -169,7 +214,16 @@ export const DragDrop = () => {
       <StyledApp>
         <div className="container">
           <div className="dragging-element-status">
-
+            <div className="dragging-element">{`draggingElement: ${draggingElementStatus.draggingElement && draggingElementStatus.draggingElement.id}`}</div>
+            <div className="translate draggable" onMouseDown={handleDown}>{`x: ${draggingElementStatus.translate.x}, y: ${draggingElementStatus.translate.y}`}</div>
+            <div className="dragging-direction">
+              {`horizontal: ${draggingElementStatus.draggingDirection.horizontal}, vertical: ${draggingElementStatus.draggingDirection.vertical}`}
+            </div>
+            <div className="mouse-status">
+              {
+                `isDown: ${draggingElementStatus.mouseStatus.isDown}, isMove: ${draggingElementStatus.mouseStatus.isMove}, isUp: ${draggingElementStatus.mouseStatus.isUp}`
+              }
+            </div>
           </div>
           <div className="draggables">
             <Draggable
