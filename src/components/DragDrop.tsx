@@ -213,7 +213,7 @@ export const DragDrop = () => {
     <>
       <StyledApp>
         <div className="container">
-          <div className="dragging-element-status">
+          {/* <div className="dragging-element-status">
             <div className="dragging-element">{`draggingElement: ${draggingElementStatus.draggingElement && draggingElementStatus.draggingElement.id}`}</div>
             <div className="translate draggable" onMouseDown={handleDown}>{`x: ${draggingElementStatus.translate.x}, y: ${draggingElementStatus.translate.y}`}</div>
             <div className="dragging-direction">
@@ -224,7 +224,7 @@ export const DragDrop = () => {
                 `isDown: ${draggingElementStatus.mouseStatus.isDown}, isMove: ${draggingElementStatus.mouseStatus.isMove}, isUp: ${draggingElementStatus.mouseStatus.isUp}`
               }
             </div>
-          </div>
+          </div> */}
           <div className="draggables">
             <Draggable
               id="element-1"

@@ -17,6 +17,7 @@ export const Practice = () => {
           <Tab>練習7</Tab>
           <Tab>練習8</Tab>
           <Tab>練習9</Tab>
+          <Tab>練習10</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -45,6 +46,9 @@ export const Practice = () => {
           </TabPanel>
           <TabPanel>
             <Button ml="10"><Link to='/DragDrop'>DragDrop</Link></Button>
+          </TabPanel>
+          <TabPanel>
+            <Button ml="10"><Link to='/DragDrop2'>DragDrop2</Link></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
