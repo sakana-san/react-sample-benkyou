@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react"
+import React, { useState, useRef, useCallback, useEffect, useLayoutEffect } from "react"
 import { Box, SimpleGrid } from "@chakra-ui/react"
 import styled, { createGlobalStyle } from 'styled-components'
 
@@ -180,7 +180,7 @@ const useDragElemetns = (isStyleTransform: boolean = true): [
       isUp: true
     }))
   }
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isStyleTransform) return
     // nullの判定（TypeScript）
     if (!draggingElement.current) return
