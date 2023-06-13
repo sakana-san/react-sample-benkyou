@@ -144,14 +144,35 @@ const useDragElemetns = (): [DraggingEl, Handler] => {
       y: zenkainoTranslate.current.y + differenceY
     })
   }
+
+  const handleUp = (): void => {
+    
+
+
+    // ドロップ＝押し込みをやめたということで空にする
+    draggingElement.current = null;
+    // 押し込み時、isUpをtrueに切り替え、isDownをfalse
+    setMouseStatus(prevMouseStatus => ({
+      ...prevMouseStatus,
+      isUp: true,
+      isDown: false
+    }))
+  }
+
+
+
   useLayoutEffect(() => {
     if (!draggingElement.current) return
     draggingElement.current.style.transform = `translate3d(${translate.x}px, ${translate.y}px, 0)`
   })
   useEffect(() => {
     document.addEventListener('mousemove', handleMove)
+    document.addEventListener('mouseup', handleUp)
+    document.body.addEventListener("mouseleave", handleUp)
     return () => {
       document.body.removeEventListener("mousemove", handleMove)
+      document.body.removeEventListener("mouseup", handleUp)
+      document.body.removeEventListener("mouseleave", handleUp)
     }
   })
   return [
