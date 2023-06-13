@@ -37,7 +37,6 @@ type Point = {
   x: number,
   y: number
 }
-
 type MouseStatus = {
   isDown: boolean
   isMove: boolean
@@ -49,6 +48,9 @@ type DraggingEl = {
   draggingElement: EventTarget & Element | null
 }
 type Handler = (e: React.MouseEvent<EventTarget & HTMLElement>) => void
+
+
+
 
 const useDragElemetns = (): [DraggingEl, Handler] => {
   // 現在のマウスイベントの状態
@@ -108,8 +110,6 @@ const useDragElemetns = (): [DraggingEl, Handler] => {
 
 
 
-
-
   const handleMove = (e: MouseEvent): void => {
     e.preventDefault()
     const differenceX = e.pageX - startPoint.current.x
@@ -122,9 +122,11 @@ const useDragElemetns = (): [DraggingEl, Handler] => {
     })
   }
 
-  const handleUp = (): void => {
-    
 
+
+  const handleUp = (): void => {
+    // 押し込んでいなければ終了
+    if (!draggingElement.current) return;
 
     // ドロップ＝押し込みをやめたということで空にする
     draggingElement.current = null;
