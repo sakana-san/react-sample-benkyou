@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react"
+import React, { useState, useRef, useCallback, useEffect, useLayoutEffect } from "react"
 import styled, { createGlobalStyle } from 'styled-components'
 
 const StyledApp = styled.div`
@@ -37,34 +37,63 @@ type Point = {
   x: number,
   y: number
 }
+
+type DraggingDirection = {
+  horizonal: 'left' | 'right' | null
+  vertical: 'up' | 'down' | null
+}
+
 type MouseStatus = {
   isDown: boolean
   isMove: boolean
   isUp: boolean
 }
 type DraggingEl = {
+  translate: Point
   mouseStatus: MouseStatus
+  draggingElement: EventTarget & Element | null
+  draggingDirection: DraggingDirection
 }
 type Handler = (e: React.MouseEvent<EventTarget & HTMLElement>) => void
 
 const useDragElemetns = (): [DraggingEl, Handler] => {
+  // 現在のマウスイベントの状態
   const [mouseStatus, setMouseStatus] = useState<MouseStatus>({
     isDown: false,
     isMove: false,
     isUp: false
   })
+  // ドラッグしている要素の移動量
+  const [translate, setTranslate] = useState<Point>({x: 0, y: 0})
 
   const startPoint = useRef<Point>({ x: 0, y: 0 })
+  
+   // 前回のtranslate
   const zenkainoTranslate = useRef<Point>({ x: 0, y: 0 })
+
+  // 前回のマウスの移動距離
+  const prevDifference = useRef<Point>({ x: 0, y: 0 });
+  
+  // ドラッグしている要素
   const draggingElement = useRef<EventTarget & HTMLElement | null>(null)
+
+  // ドラッグしている方向
+  const draggingDirection = useRef<DraggingDirection>({
+    horizonal: null,
+    vertical: null
+  })
+  // .dra
+
+
+
 
 
 
   const handleDown = (e: React.MouseEvent<EventTarget & HTMLElement>): void => {
     draggingElement.current = e.currentTarget
+
     // 現在のtransform: translate()のx, y値を取得
     const matrix = new DOMMatrix(getComputedStyle(draggingElement.current).transform)
-    console.log(matrix)
     zenkainoTranslate.current = {
       x: matrix.translateSelf().e,
       y: matrix.translateSelf().f,
@@ -89,9 +118,48 @@ const useDragElemetns = (): [DraggingEl, Handler] => {
       isDown: true
     }))
   }
+
+
+
+
+
+  const handleMove = (e: MouseEvent): void => {
+    e.preventDefault()
+    const differenceX = e.pageX - startPoint.current.x
+    const differenceY = e.pageY - startPoint.current.y
+    // if (differenceX > prevDifference.current.x) {
+    //   draggingDirection.current.horizonal = 'right'
+    // } else if (differenceX < prevDifference.current.x) {
+    //   draggingDirection.current.horizonal = "left"
+    // }
+
+    // if (differenceY > prevDifference.current.y) {
+    //   draggingDirection.current.vertical = "down"
+    // } else if (differenceY < prevDifference.current.y) {
+    //   draggingDirection.current.vertical = "up";
+    // }
+
+    setTranslate({
+      x: zenkainoTranslate.current.x + differenceX,
+      y: zenkainoTranslate.current.y + differenceY
+    })
+  }
+  useLayoutEffect(() => {
+    if (!draggingElement.current) return
+    draggingElement.current.style.transform = `translate3d(${translate.x}px, ${translate.y}px, 0)`
+  })
+  useEffect(() => {
+    document.addEventListener('mousemove', handleMove)
+    return () => {
+      document.body.removeEventListener("mousemove", handleMove)
+    }
+  })
   return [
     {
+      translate,
       mouseStatus,
+      draggingElement: draggingElement.current,
+      draggingDirection: draggingDirection.current
     },
     handleDown
   ]
