@@ -38,11 +38,6 @@ type Point = {
   y: number
 }
 
-type DraggingDirection = {
-  horizonal: 'left' | 'right' | null
-  vertical: 'up' | 'down' | null
-}
-
 type MouseStatus = {
   isDown: boolean
   isMove: boolean
@@ -52,7 +47,6 @@ type DraggingEl = {
   translate: Point
   mouseStatus: MouseStatus
   draggingElement: EventTarget & Element | null
-  draggingDirection: DraggingDirection
 }
 type Handler = (e: React.MouseEvent<EventTarget & HTMLElement>) => void
 
@@ -76,13 +70,6 @@ const useDragElemetns = (): [DraggingEl, Handler] => {
   
   // ドラッグしている要素
   const draggingElement = useRef<EventTarget & HTMLElement | null>(null)
-
-  // ドラッグしている方向
-  const draggingDirection = useRef<DraggingDirection>({
-    horizonal: null,
-    vertical: null
-  })
-  // .dra
 
 
 
@@ -127,17 +114,7 @@ const useDragElemetns = (): [DraggingEl, Handler] => {
     e.preventDefault()
     const differenceX = e.pageX - startPoint.current.x
     const differenceY = e.pageY - startPoint.current.y
-    // if (differenceX > prevDifference.current.x) {
-    //   draggingDirection.current.horizonal = 'right'
-    // } else if (differenceX < prevDifference.current.x) {
-    //   draggingDirection.current.horizonal = "left"
-    // }
 
-    // if (differenceY > prevDifference.current.y) {
-    //   draggingDirection.current.vertical = "down"
-    // } else if (differenceY < prevDifference.current.y) {
-    //   draggingDirection.current.vertical = "up";
-    // }
 
     setTranslate({
       x: zenkainoTranslate.current.x + differenceX,
@@ -179,8 +156,7 @@ const useDragElemetns = (): [DraggingEl, Handler] => {
     {
       translate,
       mouseStatus,
-      draggingElement: draggingElement.current,
-      draggingDirection: draggingDirection.current
+      draggingElement: draggingElement.current
     },
     handleDown
   ]
